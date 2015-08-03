@@ -41,7 +41,7 @@ public class Main {
 	public static Tweet processLine(String line){
 		
 		String[] fields = line.split("\t");
-		Tweet t = new Tweet(fields[0], fields[1], fields[2], fields[3]);
+		Tweet t = new Tweet(fields[0], fields[1], fields[2], fields[3], fields[4]);
 		return t;
 		
 	}

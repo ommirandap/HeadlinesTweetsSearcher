@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -23,7 +24,7 @@ import org.apache.lucene.store.FSDirectory;
 
 public class SearchTweets {
 
-	private static final int DOCS_PER_PAGE = 15;
+	private static final int DOCS_PER_PAGE = 50;
 
 	static public void main(String []args) throws IOException, ParseException{
 		
@@ -79,16 +80,23 @@ public class SearchTweets {
 		
 		
 		ArrayList<String[]> results = new ArrayList<String[]>();
+
 		
 		for (int i = 0; i < docResults.length; i++) {
 			Document doc = searcher.doc(docResults[i].doc);
 			String text = doc.get(IndexTweets.FieldNames.TEXT.name());
-			String userID = doc.get(IndexTweets.FieldNames.USERID.name());
-			results.add(new String[]{userID, text});
+			String userName = doc.get(IndexTweets.FieldNames.USERNAME.name());
+
+			String timestamp = doc.get(IndexTweets.FieldNames.TIMESTAMP.name());
+			//Long timestamp = Long.parseLong(doc.get(IndexTweets.FieldNames.TIMESTAMP.name()));
+			Long d = Long.parseLong(timestamp);
+			Date d1 = new Date(d);
+			
+			results.add(new String[]{d1.toString(), userName, text});
 		}
 		
 		for (String[] strings : results) {
-			System.out.printf("USERID: %s\t TEXT: %s\n", strings[0], strings[1]);
+			System.out.printf("Date: %s\t @ %s\t Text: %s\n", strings[0], strings[1], strings[2]);
 		}
 		
 		

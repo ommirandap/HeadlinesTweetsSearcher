@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * @author ommirandap
@@ -25,18 +24,24 @@ public class Tweet {
 	
 	private Date timestamp;
 	private long tweetID;
+	private String userName;
 	private long userID;
 	private String text;
 	
-	public Tweet(String timestamp, String userID, String tweetID, String text){
+	public Tweet(String timestamp, String userID, String userName, String tweetID, String text){
 		this.timestamp = processTime_date(timestamp);
 		this.userID = Long.parseLong(userID);
+		this.userName = userName;
 		this.tweetID = Long.parseLong(tweetID);
 		this.text = text;
 	}
 	
 	public long getTweetID() {
 		return tweetID;
+	}
+
+	public String getUserName() {
+		return userName;
 	}
 
 	public long getUserID() {
